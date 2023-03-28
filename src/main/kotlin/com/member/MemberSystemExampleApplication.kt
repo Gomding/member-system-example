@@ -3,7 +3,7 @@ package com.member
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-@SpringBootApplication(scanBasePackageClasses = [MemberSystemExampleApplication::class])
+@SpringBootApplication
 class MemberSystemExampleApplication {
 }
 
