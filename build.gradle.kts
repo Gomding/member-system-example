@@ -21,6 +21,7 @@ repositories {
 dependencies {
     // web
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     // persistence
     runtimeOnly("com.h2database:h2")
