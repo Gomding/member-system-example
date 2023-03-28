@@ -33,6 +33,22 @@ class Coupon(
         this.memberId = member.id
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Coupon
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
+
     companion object {
         fun of(couponType: CouponType): Coupon {
             val validStartDate = LocalDate.now()
