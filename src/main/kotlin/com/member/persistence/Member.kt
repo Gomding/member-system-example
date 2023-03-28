@@ -10,11 +10,12 @@ import javax.persistence.Table
 @Table(name = "member")
 @Entity
 class Member(
+    id: Long = 0,
     name: String,
     age: Int,
 ) {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0
+    val id: Long = id
 
     @Column
     var name: String = name
