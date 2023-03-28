@@ -31,7 +31,8 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter", "junit-jupiter", "5.8.2")
-    testImplementation("io.kotest", "kotest-runner-junit5", "5.2.3")
+    testImplementation("io.kotest", "kotest-runner-junit5", "5.3.1")
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.0")
 }
 
 tasks.test {
