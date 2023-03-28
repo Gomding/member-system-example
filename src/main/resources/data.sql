@@ -1,0 +1,1 @@
+INSERT INTO coupon_type(code, name, discount_amount, valid_days) VALUES('S01', '신규가입 환영 쿠폰', 5000, 14);
