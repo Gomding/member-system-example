@@ -9,16 +9,16 @@ class CouponService(
     val couponTypeRepository: CouponTypeRepository,
     val currentDateTimeService: CurrentDateTimeService,
 ) {
-    fun signUpWelcomeCoupon(member: Member): Coupon {
+    fun signUpWelcomeCoupon(memberId: Long): Coupon {
         val signUpWelcomeCouponType =
             couponTypeRepository.findCouponTypeByCode(code = CouponCode.SIGN_UP_WELCOME.couponCode)
-        return publishCoupon(member = member, couponType = signUpWelcomeCouponType)
+        return publishCoupon(memberId = memberId, couponType = signUpWelcomeCouponType)
     }
 
-    private fun publishCoupon(member: Member, couponType: CouponType): Coupon {
+    private fun publishCoupon(memberId: Long, couponType: CouponType): Coupon {
         val coupon = Coupon.publishCoupon(
             couponType = couponType,
-            member = member,
+            memberId = memberId,
             validStartDate = currentDateTimeService.localDateNow(),
         )
         validatePublishCoupon(coupon)

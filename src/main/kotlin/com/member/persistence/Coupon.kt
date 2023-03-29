@@ -46,12 +46,12 @@ class Coupon(
     }
 
     companion object {
-        fun publishCoupon(couponType: CouponType, member: Member, validStartDate: LocalDate): Coupon {
+        fun publishCoupon(couponType: CouponType, memberId: Long, validStartDate: LocalDate): Coupon {
             return Coupon(
                 couponCode = couponType.code,
                 validStartDate = validStartDate,
                 validLastDate = validStartDate.plusDays(couponType.validDays),
-                memberId = member.id,
+                memberId = memberId,
             )
         }
     }

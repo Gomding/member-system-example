@@ -15,7 +15,7 @@ internal class CouponTest: FunSpec({
         val validStartDate = LocalDate.of(2023, 3, 7)
 
         // when
-        val coupon = Coupon.publishCoupon(couponType = couponType, member = member, validStartDate = validStartDate)
+        val coupon = Coupon.publishCoupon(couponType = couponType, memberId = member.id, validStartDate = validStartDate)
 
         // then
         coupon shouldNotBe null

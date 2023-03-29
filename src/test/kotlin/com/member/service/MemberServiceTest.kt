@@ -1,17 +1,20 @@
 package com.member.service
 
-import com.member.persistence.CouponCode
 import com.member.persistence.CouponRepository
+import com.member.service.event.MemberSignUpEvent
 import com.member.testfixture.MemberFixture
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.event.EventListener
+import org.springframework.stereotype.Component
 
 @SpringBootTest
 internal class MemberServiceTest(
     private val sut: MemberService,
     private val couponRepository: CouponRepository,
+    private val memberSignUpTestEventListener: MemberSignUpTestEventListener
 ) : FunSpec({
 
     test("회원가입이 가능하다") {
@@ -25,7 +28,7 @@ internal class MemberServiceTest(
         signUpMemberId shouldNotBe 0
     }
 
-    test("회원가입 시 신규회원 가입 쿠폰을 발급한다.") {
+    test("회원가입 시 회원가입 이벤트를 발행한다.") {
         // given
         val member = MemberFixture.create(id = 0)
 
@@ -33,8 +36,16 @@ internal class MemberServiceTest(
         val signUpMemberId = sut.signUp(member)
 
         // then
-        val coupon = couponRepository.findByMemberId(signUpMemberId)
-        coupon shouldNotBe null
-        coupon?.couponCode shouldBe CouponCode.SIGN_UP_WELCOME.couponCode
+        memberSignUpTestEventListener.isMemberSignUpPublished shouldBe true
     }
 })
+
+@Component
+class MemberSignUpTestEventListener(
+    var isMemberSignUpPublished: Boolean = false,
+) {
+    @EventListener
+    fun publishMemberSignUpEvent(memberSignUpEvent: MemberSignUpEvent) {
+        this.isMemberSignUpPublished = true
+    }
+}
