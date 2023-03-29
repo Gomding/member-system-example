@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class MemberService(
     private val memberRepository: MemberRepository,
+    private val couponService: CouponService,
 ) {
     fun signUp(member: Member): Long {
         val savedMember = memberRepository.save(member)
+        couponService.signUpWelcomeCoupon(savedMember)
         return savedMember.id
     }
 }
