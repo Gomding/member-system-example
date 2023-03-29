@@ -11,6 +11,7 @@ class Coupon(
     couponCode: String,
     validStartDate: LocalDate,
     validLastDate: LocalDate,
+    memberId: Long,
 ) {
 
     @Id
@@ -26,12 +27,8 @@ class Coupon(
     var validLastDate: LocalDate = validLastDate
     protected set
 
-    var memberId: Long = 0
+    var memberId: Long = memberId
     protected set
-
-    fun issueCoupon(member: Member) {
-        this.memberId = member.id
-    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -48,14 +45,13 @@ class Coupon(
         return id.hashCode()
     }
 
-
     companion object {
-        fun of(couponType: CouponType): Coupon {
-            val validStartDate = LocalDate.now()
+        fun publishCoupon(couponType: CouponType, member: Member, validStartDate: LocalDate): Coupon {
             return Coupon(
                 couponCode = couponType.code,
                 validStartDate = validStartDate,
                 validLastDate = validStartDate.plusDays(couponType.validDays),
+                memberId = member.id,
             )
         }
     }

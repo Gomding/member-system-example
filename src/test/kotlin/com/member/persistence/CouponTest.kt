@@ -5,31 +5,23 @@ import com.member.testfixture.MemberFixture
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import java.time.LocalDate
 
 internal class CouponTest: FunSpec({
     test("CouponType 정보로 Coupon 객체를 생성할 수 있다.") {
         // given
         val couponType = CouponTypeFixture.create()
+        val member = MemberFixture.create()
+        val validStartDate = LocalDate.of(2023, 3, 7)
 
         // when
-        val coupon = Coupon.of(couponType)
+        val coupon = Coupon.publishCoupon(couponType = couponType, member = member, validStartDate = validStartDate)
 
         // then
         coupon shouldNotBe null
         coupon.couponCode shouldBe couponType.code
-        coupon.memberId shouldBe 0
-    }
-
-    test("쿠폰을 멤버에게 발급한다") {
-        // given
-        val couponType = CouponTypeFixture.create()
-        val member = MemberFixture.create()
-        val sut = Coupon.of(couponType)
-
-        // when
-        sut.issueCoupon(member)
-
-        // then
-        sut.memberId shouldBe member.id
+        coupon.validStartDate shouldBe validStartDate
+        coupon.validLastDate shouldBe validStartDate.plusDays(couponType.validDays)
+        coupon.memberId shouldBe member.id
     }
 })
