@@ -2,7 +2,6 @@ package com.member.service
 
 import com.member.domain.Member
 import com.member.domain.MemberRepository
-import com.member.internal.CouponClient
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -10,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class MemberService(
     private val memberRepository: MemberRepository,
-    private val couponClient: CouponClient,
+    private val eventPublisher: EventPublisher,
 ) {
     fun signUp(member: Member): Long {
         val savedMember = memberRepository.save(member)
-        couponClient.publishSignUpCoupon(savedMember.id)
+        eventPublisher.signUp(MemberSignUpEvent(savedMember.id))
         return savedMember.id
     }
 }
