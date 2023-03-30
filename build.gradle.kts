@@ -18,21 +18,42 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    // web
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
+allprojects {
+    repositories {
+        mavenCentral()
+        maven("https://plugins.gradle.org/m2/")
+    }
+}
 
-    // persistence
-    runtimeOnly("com.h2database:h2")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+subprojects {
 
-    // test
-    testImplementation(kotlin("test"))
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.junit.jupiter", "junit-jupiter", "5.8.2")
-    testImplementation("io.kotest", "kotest-runner-junit5", "5.3.1")
-    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.0")
+    apply {
+        plugin("kotlin")
+        plugin("io.spring.dependency-management")
+        plugin("kotlin-spring") // instead of "kotlin-allopen"
+        plugin("org.springframework.boot")
+        plugin("kotlin-jpa")
+        plugin("jacoco")
+        plugin("kotlin-kapt")
+        plugin("idea")
+    }
+
+    dependencies {
+        // web
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+        // persistence
+        runtimeOnly("com.h2database:h2")
+        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+        // test
+        testImplementation(kotlin("test"))
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("org.junit.jupiter", "junit-jupiter", "5.8.2")
+        testImplementation("io.kotest", "kotest-runner-junit5", "5.3.1")
+        testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.0")
+    }
 }
 
 tasks.test {
