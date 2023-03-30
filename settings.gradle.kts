@@ -9,3 +9,5 @@ pluginManagement {
 
 include("coupon")
 include("member")
+include("external")
+include("infra")
