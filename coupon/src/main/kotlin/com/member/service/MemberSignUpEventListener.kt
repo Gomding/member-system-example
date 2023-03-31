@@ -1,7 +1,5 @@
 package com.member.service
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.awspring.cloud.messaging.listener.SqsMessageDeletionPolicy
 import io.awspring.cloud.messaging.listener.annotation.SqsListener
 import org.slf4j.LoggerFactory
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class CouponMemberSignedUpListener(
     private val couponService: CouponService,
-    private val objectMapper: ObjectMapper = jacksonObjectMapper(),
 ) {
     private val logger = LoggerFactory.getLogger(CouponMemberSignedUpListener::class.java)
 
@@ -21,11 +18,9 @@ class CouponMemberSignedUpListener(
         deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS,
     )
     @MessageMapping
-    fun onMemberSignedUp(@Payload payload: Map<String, Any>) {
+    fun onMemberSignedUp(@Payload message: MemberSignedUpMessage) {
         logger.info("memberSignedUp message received")
-        val message: String = payload["Message"] as String
-        val memberSignedUpMessage = objectMapper.readValue(message, MemberSignedUpMessage::class.java)
-        val memberId = memberSignedUpMessage.memberId
+        val memberId = message.memberId
         couponService.signUpWelcomeCoupon(memberId)
         logger.info("memberSignedUp message received work success")
     }
