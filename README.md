@@ -13,6 +13,6 @@
 * [x] AWS SNS, SQS 연결하여 회원가입 이벤트 발행
 * [x] SQS 에서 회원가입 이벤트를 구독하여 신규가입 쿠폰 발급
 
-* [ ] SNS 주제 발행 시 이벤트 발행 이력 테이블에 저장
-  * [ ] received 는 기본값 false
-  * [ ] SQS가 SNS 주제를 받으면 receive 값이 true로 업데이트 되도록 수정 
+* [x] SNS 주제 발행 시 이벤트 발행 이력 테이블에 저장
+  * [x] published 는 기본값 false
+  * [ ] 구독 확인 SQS가 SNS 주제를 받으면 published 값이 true로 업데이트 되도록 수정 
