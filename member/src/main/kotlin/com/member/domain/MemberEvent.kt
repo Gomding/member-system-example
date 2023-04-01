@@ -1,11 +1,7 @@
 package com.member.domain
 
 import java.time.LocalDateTime
-import javax.persistence.Entity
-import javax.persistence.Enumerated
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 class MemberEvent(
@@ -25,7 +21,7 @@ class MemberEvent(
     var memberId: Long = memberId
         protected set
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     var eventType: MemberEventType = eventType
         protected set
 
@@ -37,6 +33,11 @@ class MemberEvent(
 
     var publishedAt: LocalDateTime? = publishedAt
         protected set
+
+    fun deliveryConfirmed() {
+        this.published = true
+        this.publishedAt = LocalDateTime.now()
+    }
 
     companion object {
         fun createSignUpEvent(memberId: Long): MemberEvent {

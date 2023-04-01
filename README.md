@@ -15,4 +15,4 @@
 
 * [x] SNS 주제 발행 시 이벤트 발행 이력 테이블에 저장
   * [x] published 는 기본값 false
-  * [ ] 구독 확인 SQS가 SNS 주제를 받으면 published 값이 true로 업데이트 되도록 수정 
+  * [x] 구독 확인 SQS가 SNS 주제를 받으면 published 값이 true로 업데이트 되도록 수정 
